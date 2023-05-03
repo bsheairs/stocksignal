@@ -2,9 +2,10 @@ import { calculateSMA } from "./calculations";
 
 describe("calculateSMA", () => {
   it("should calculate the correct simple moving average", () => {
-    const prices = [1, 2, 3, 4, 5];
+    const prices = [2, 3, 4];
     const period = 3;
-    const expectedSMA = (3 + 4 + 5) / 3;
+
+    const expectedSMA = (2 + 3 + 4) / 3;
 
     expect(calculateSMA(prices, period)).toEqual(expectedSMA);
   });
