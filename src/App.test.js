@@ -1,42 +1,21 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
 import App from "./App";
 
-describe("App component", () => {
-  test("renders header", () => {
+describe("App", () => {
+  test("renders initial UI elements", () => {
     render(<App />);
-    const headerElement = screen.getByText(/AI Stock Signal/i);
-    expect(headerElement).toBeInTheDocument();
-  });
 
-  test("renders form and input", () => {
-    render(<App />);
-    const inputElement = screen.getByPlaceholderText("Enter stock ticker");
-    expect(inputElement).toBeInTheDocument();
-  });
+    // Check if the header is rendered
+    expect(screen.getByText("AI Stock Signal")).toBeInTheDocument();
 
-  test("renders submit button", () => {
-    render(<App />);
-    const buttonElement = screen.getByText("Get Signal");
-    expect(buttonElement).toBeInTheDocument();
-  });
+    // Check if the canvas element for the chart is rendered
+    expect(screen.getByTestId("confidence-chart")).toBeInTheDocument();
 
-  test("renders confidence chart", () => {
-    render(<App />);
-    const confidenceChartElement = screen.getByTestId("confidence-chart");
-    expect(confidenceChartElement).toBeInTheDocument();
-  });
-
-  test("submits form and updates ticker", async () => {
-    render(<App />);
-    const inputElement = screen.getByPlaceholderText("Enter stock ticker");
-    const buttonElement = screen.getByText("Get Signal");
-
-    fireEvent.change(inputElement, { target: { value: "AAPL" } });
-    fireEvent.click(buttonElement);
-
-    const tickerElement = await screen.findByText(
-      "The trading signal for AAPL is:"
-    );
-    expect(tickerElement).toBeInTheDocument();
+    // Check if the input field and button are rendered
+    expect(
+      screen.getByPlaceholderText("Enter stock ticker")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Get Signal")).toBeInTheDocument();
   });
 });

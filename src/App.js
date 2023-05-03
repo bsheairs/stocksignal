@@ -12,24 +12,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const chartRef = useRef(null);
 
-  const fetchStockData = async (ticker) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE_API_KEY}`
-      );
-      const data = response.data["Time Series (Daily)"];
-      const sma50 = calculateSMA(Object.values(data), 50);
-      const sma200 = calculateSMA(Object.values(data), 200);
-      setSignal(sma50 > sma200 ? "BUY" : "SELL");
-      drawConfidenceChart(Math.random() * 100);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setSignal("Error fetching data");
-    }
-    setLoading(false);
-  };
-
   const drawConfidenceChart = (confidence) => {
     if (chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
@@ -77,6 +59,38 @@ const App = () => {
     }
   };
 
+  const fetchStockData = async (ticker) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE_API_KEY}`
+      );
+
+      if (!response.data || !response.data["Time Series (Daily)"]) {
+        console.error("API response missing data:", response);
+        throw new Error("Missing data in API response");
+      }
+
+      const data = response.data["Time Series (Daily)"];
+      const values = Object.values(data);
+
+      if (!values || values.length === 0) {
+        console.error("No data values found:", data);
+        throw new Error("No data values found");
+      }
+
+      const sma50 = calculateSMA(values, 50);
+      const sma200 = calculateSMA(values, 200);
+      setSignal(sma50 > sma200 ? "BUY" : "SELL");
+      drawConfidenceChart(Math.random() * 100);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setSignal("Error fetching data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchStockData(ticker);
   }, [ticker]);
@@ -94,10 +108,12 @@ const App = () => {
       <div className="content">
         <canvas
           id="confidence-chart"
-          width="400"
-          height="100"
           ref={chartRef}
-        ></canvas>
+          data-testid="confidence-chart"
+          width={400}
+          height={100}
+        />
+
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input

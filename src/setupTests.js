@@ -4,3 +4,11 @@
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
+import { createCanvas } from "canvas";
+// src/setupTests.js
+import "jest-canvas-mock";
+
+// Mock the HTMLCanvasElement.getContext method
+HTMLCanvasElement.prototype.getContext = function () {
+  return createCanvas(300, 150).getContext("2d");
+};
