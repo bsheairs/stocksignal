@@ -1,21 +1,42 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
 
-test("renders the header", () => {
-  render(<App />);
-  const headerElement = screen.getByText(/AI Stock Signal/i);
-  expect(headerElement).toBeInTheDocument();
-});
+describe("App component", () => {
+  test("renders header", () => {
+    render(<App />);
+    const headerElement = screen.getByText(/AI Stock Signal/i);
+    expect(headerElement).toBeInTheDocument();
+  });
 
-test("displays the trading signal after clicking Get Signal button", async () => {
-  render(<App />);
-  const inputElement = screen.getByPlaceholderText("Enter stock ticker");
-  const buttonElement = screen.getByText(/Get Signal/i);
+  test("renders form and input", () => {
+    render(<App />);
+    const inputElement = screen.getByPlaceholderText("Enter stock ticker");
+    expect(inputElement).toBeInTheDocument();
+  });
 
-  fireEvent.change(inputElement, { target: { value: "AAPL" } });
-  fireEvent.click(buttonElement);
+  test("renders submit button", () => {
+    render(<App />);
+    const buttonElement = screen.getByText("Get Signal");
+    expect(buttonElement).toBeInTheDocument();
+  });
 
-  await waitFor(() => screen.getByText(/The trading signal for/i));
+  test("renders confidence chart", () => {
+    render(<App />);
+    const confidenceChartElement = screen.getByTestId("confidence-chart");
+    expect(confidenceChartElement).toBeInTheDocument();
+  });
 
-  expect(screen.getByText(/The trading signal for/i)).toBeInTheDocument();
+  test("submits form and updates ticker", async () => {
+    render(<App />);
+    const inputElement = screen.getByPlaceholderText("Enter stock ticker");
+    const buttonElement = screen.getByText("Get Signal");
+
+    fireEvent.change(inputElement, { target: { value: "AAPL" } });
+    fireEvent.click(buttonElement);
+
+    const tickerElement = await screen.findByText(
+      "The trading signal for AAPL is:"
+    );
+    expect(tickerElement).toBeInTheDocument();
+  });
 });

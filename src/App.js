@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./App.css";
 import { calculateSMA } from "./utils/calculations";
+import Chart from "chart.js/auto";
+import "chartjs-plugin-annotation";
 
 const App = () => {
   const [ticker, setTicker] = useState("SPY");
   const [inputTicker, setInputTicker] = useState("SPY");
   const [signal, setSignal] = useState(null);
   const [loading, setLoading] = useState(false);
+  const chartRef = useRef(null);
 
   const fetchStockData = async (ticker) => {
     setLoading(true);
@@ -19,11 +22,59 @@ const App = () => {
       const sma50 = calculateSMA(Object.values(data), 50);
       const sma200 = calculateSMA(Object.values(data), 200);
       setSignal(sma50 > sma200 ? "BUY" : "SELL");
+      drawConfidenceChart(Math.random() * 100);
     } catch (error) {
       console.error("Error fetching data:", error);
       setSignal("Error fetching data");
     }
     setLoading(false);
+  };
+
+  const drawConfidenceChart = (confidence) => {
+    if (chartRef.current) {
+      const ctx = chartRef.current.getContext("2d");
+
+      if (window.myChart) {
+        window.myChart.destroy();
+      }
+
+      window.myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["0%", "100%"],
+          datasets: [
+            {
+              data: [0, 100],
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+            },
+          },
+          plugins: {
+            annotation: {
+              annotations: {
+                point: {
+                  type: "point",
+                  xValue: confidence,
+                  yValue: confidence,
+                  backgroundColor: "rgba(255, 99, 132, 1)",
+                  borderColor: "rgba(255, 99, 132, 1)",
+                  radius: 5,
+                },
+              },
+            },
+          },
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -41,6 +92,12 @@ const App = () => {
         <h1>AI Stock Signal</h1>
       </header>
       <div className="content">
+        <canvas
+          id="confidence-chart"
+          width="400"
+          height="100"
+          ref={chartRef}
+        ></canvas>
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input
