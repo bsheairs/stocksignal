@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "San Francisco", "Inter", sans-serif;
-  background-color: #1c1c1c;
-  color: #f5f5f5;
+  font-family: "Inter", sans-serif;
+  background-color: #ffffff;
+  color: #1b1c1d;
   align-items: center;
 }
 
@@ -16,7 +16,8 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #1b1c1d;
+  margin-top: 2rem;
 }
 
 .content {
@@ -39,8 +40,8 @@ input {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-  background-color: #2c2c2c;
-  color: #f5f5f5;
+  background-color: #f5f5f5;
+  color: #1b1c1d;
   width: 300px;
   margin-bottom: 1rem;
   outline: none;
@@ -48,11 +49,11 @@ input {
 }
 
 input:focus {
-  border-color: #4caf50;
+  border-color: #3d64f6;
 }
 
 button {
-  background-color: #4caf50;
+  background-color: #3d64f6;
   color: white;
   padding: 10px 20px;
   font-size: 1rem;
@@ -63,7 +64,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #2c4fd4;
 }
 
 .signal {
