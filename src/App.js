@@ -3,68 +3,76 @@ import axios from "axios";
 import "./App.css";
 import { calculateSMA } from "./utils/calculations";
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 function App() {
   const [ticker, setTicker] = useState("SPY");
+  const [displayedTicker, setDisplayedTicker] = useState(ticker);
+  const [signal, setSignal] = useState("");
   const [loading, setLoading] = useState(true);
-  const [signal, setSignal] = useState(null);
-  const API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
 
-  useEffect(() => {
-    document.title = "AI Stock Signal";
-  }, []);
-
-  const fetchStockData = async () => {
+  const fetchStockData = async (ticker) => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}&outputsize=full`
+      const { data } = await axios.get(
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`
       );
-
-      const data = response.data["Time Series (Daily)"];
-      const prices = Object.values(data).map((entry) =>
-        parseFloat(entry["4. close"])
+      const prices = Object.values(data["Time Series (Daily)"]).map((day) =>
+        parseFloat(day["5. adjusted close"])
       );
       const sma50 = calculateSMA(prices, 50);
       const sma200 = calculateSMA(prices, 200);
 
       if (sma50 > sma200) {
-        setSignal("BUY");
+        setSignal("Buy");
       } else {
-        setSignal("SELL");
+        setSignal("Sell");
       }
-
+      setDisplayedTicker(ticker);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
       setLoading(false);
+      console.error("Error fetching stock data:", error);
     }
+  };
+
+  useEffect(() => {
+    fetchStockData(ticker);
+  }, []);
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    fetchStockData(ticker);
+  };
+
+  const handleInputChange = (event) => {
+    setTicker(event.target.value);
   };
 
   return (
     <div className="App">
       <header className="header">
-        <h1>Stock Trading Signal</h1>
+        <h1>AI Stock Signal</h1>
       </header>
       <div className="content">
-        <div className="input-container">
-          <input
-            type="text"
-            value={ticker}
-            onChange={(e) => setTicker(e.target.value)}
-            placeholder="Enter stock ticker"
-          />
-          <button onClick={fetchStockData}>Get Signal</button>
-        </div>
-        <div className="signal">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <p>
-              The trading signal for <strong>{ticker}</strong> is:{" "}
-              <strong>{signal}</strong>
-            </p>
-          )}
-        </div>
+        <form onSubmit={handleFormSubmit}>
+          <div className="input-container">
+            <input
+              type="text"
+              value={ticker}
+              onChange={handleInputChange}
+              placeholder="Enter stock ticker"
+            />
+            <button type="submit">Get Signal</button>
+          </div>
+        </form>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <div>
+            <strong>{displayedTicker}</strong> Signal: {signal}
+          </div>
+        )}
       </div>
     </div>
   );
