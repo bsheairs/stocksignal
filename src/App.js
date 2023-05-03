@@ -3,50 +3,36 @@ import axios from "axios";
 import "./App.css";
 import { calculateSMA } from "./utils/calculations";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-
-function App() {
+const App = () => {
   const [ticker, setTicker] = useState("SPY");
-  const [displayedTicker, setDisplayedTicker] = useState(ticker);
-  const [signal, setSignal] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [inputTicker, setInputTicker] = useState("SPY");
+  const [signal, setSignal] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchStockData = async (ticker) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const { data } = await axios.get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${API_KEY}`
+      const response = await axios.get(
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE_API_KEY}`
       );
-      const prices = Object.values(data["Time Series (Daily)"]).map((day) =>
-        parseFloat(day["5. adjusted close"])
-      );
-      const sma50 = calculateSMA(prices, 50);
-      const sma200 = calculateSMA(prices, 200);
-
-      if (sma50 > sma200) {
-        setSignal("Buy");
-      } else {
-        setSignal("Sell");
-      }
-      setDisplayedTicker(ticker);
-      setLoading(false);
+      const data = response.data["Time Series (Daily)"];
+      const sma50 = calculateSMA(Object.values(data), 50);
+      const sma200 = calculateSMA(Object.values(data), 200);
+      setSignal(sma50 > sma200 ? "BUY" : "SELL");
     } catch (error) {
-      setLoading(false);
-      console.error("Error fetching stock data:", error);
+      console.error("Error fetching data:", error);
+      setSignal("Error fetching data");
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchStockData(ticker);
-  }, []);
+  }, [ticker]);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    fetchStockData(ticker);
-  };
-
-  const handleInputChange = (event) => {
-    setTicker(event.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setTicker(inputTicker);
   };
 
   return (
@@ -55,12 +41,12 @@ function App() {
         <h1>AI Stock Signal</h1>
       </header>
       <div className="content">
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input
               type="text"
-              value={ticker}
-              onChange={handleInputChange}
+              value={inputTicker}
+              onChange={(e) => setInputTicker(e.target.value)}
               placeholder="Enter stock ticker"
             />
             <button type="submit">Get Signal</button>
@@ -70,12 +56,12 @@ function App() {
           <div>Loading...</div>
         ) : (
           <div>
-            <strong>{displayedTicker}</strong> Signal: {signal}
+            The trading signal for <strong>{ticker}</strong> is: {signal}
           </div>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default App;
