@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./App.css";
-import { calculateSMA } from "./utils/calculations";
+import { calculateSMA, calculateLastSignalDate } from "./utils/calculations";
 import Chart from "chart.js/auto";
 import "chartjs-plugin-annotation";
 
@@ -12,7 +12,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const chartRef = useRef(null);
 
-  const drawConfidenceChart = (confidence) => {
+  const drawConfidenceChart = (prices, dates, sma50, sma200) => {
     if (chartRef.current) {
       const ctx = chartRef.current.getContext("2d");
 
@@ -20,36 +20,57 @@ const App = () => {
         window.myChart.destroy();
       }
 
+      const lastSignalDate = calculateLastSignalDate(sma50, sma200, dates);
+
       window.myChart = new Chart(ctx, {
         type: "line",
         data: {
-          labels: ["0%", "100%"],
+          labels: dates,
           datasets: [
             {
-              data: [0, 100],
+              label: "Stock Price",
+              data: prices,
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               borderColor: "rgba(75, 192, 192, 1)",
+              borderWidth: 1,
+            },
+            {
+              label: "SMA50",
+              data: sma50,
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "rgba(255, 99, 132, 1)",
+              borderWidth: 1,
+            },
+            {
+              label: "SMA200",
+              data: sma200,
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderColor: "rgba(54, 162, 235, 1)",
               borderWidth: 1,
             },
           ],
         },
         options: {
           scales: {
+            x: {
+              type: "time",
+              time: {
+                unit: "day",
+              },
+            },
             y: {
-              beginAtZero: true,
-              max: 100,
+              beginAtZero: false,
             },
           },
           plugins: {
             annotation: {
               annotations: {
-                point: {
-                  type: "point",
-                  xValue: confidence,
-                  yValue: confidence,
-                  backgroundColor: "rgba(255, 99, 132, 1)",
+                line: {
+                  type: "line",
+                  xMin: lastSignalDate,
+                  xMax: lastSignalDate,
                   borderColor: "rgba(255, 99, 132, 1)",
-                  radius: 5,
+                  borderWidth: 2,
                 },
               },
             },
@@ -73,16 +94,26 @@ const App = () => {
 
       const data = response.data["Time Series (Daily)"];
       const values = Object.values(data);
+      const dates = Object.keys(data).map((date) => new Date(date));
 
       if (!values || values.length === 0) {
         console.error("No data values found:", data);
         throw new Error("No data values found");
       }
 
+      const prices = values.map((value) => parseFloat(value["4. close"]));
       const sma50 = calculateSMA(values, 50);
       const sma200 = calculateSMA(values, 200);
-      setSignal(sma50 > sma200 ? "BUY" : "SELL");
-      drawConfidenceChart(Math.random() * 100);
+      setSignal(
+        sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
+      );
+
+      drawConfidenceChart(
+        prices.slice(-30),
+        dates.slice(-30),
+        sma50.slice(-30),
+        sma200.slice(-30)
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
       setSignal("Error fetching data");
