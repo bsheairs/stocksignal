@@ -35,7 +35,7 @@ export const drawConfidenceChart = (
       "1y": 240,
     };
 
-    for (let i = 0; i < dates.length || i < periodMap[filterPeriod]; i++) {
+    for (let i = 0; i < dates.length && i < periodMap[filterPeriod]; i++) {
       const date = moment(dates[i]);
 
       const dayOfWeek = date.day();
