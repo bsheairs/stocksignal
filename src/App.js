@@ -74,14 +74,6 @@ const App = () => {
         <h1>AI Stock Signal</h1>
       </header>
       <div className="content">
-        <canvas
-          id="confidence-chart"
-          ref={chartRef}
-          data-testid="confidence-chart"
-          width={400}
-          height={100}
-        />
-
         <form onSubmit={handleSubmit}>
           <div className="input-container">
             <input
@@ -93,10 +85,17 @@ const App = () => {
             <button type="submit">Get Signal</button>
           </div>
         </form>
+        <canvas
+          id="confidence-chart"
+          ref={chartRef}
+          data-testid="confidence-chart"
+          width={400}
+          height={100}
+        />
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <div>
+          <div className="signal">
             The trading signal for <strong>{ticker}</strong> is: {signal}
           </div>
         )}
