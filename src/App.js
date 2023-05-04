@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./App.css";
-import { calculateSMA, calculateLastSignalDate } from "./utils/calculations";
+import { calculateSMA } from "./utils/calculations";
 import { drawConfidenceChart } from "./chartConfig";
 
 const App = () => {
@@ -101,6 +101,24 @@ const App = () => {
           </div>
         )}
       </div>
+      <footer className="footer">
+        <div className="container">
+          <p>
+            This project is an example of the power of large language models
+            (LLMs) and how they can be used to develop code and automate the
+            deployment and security of web applications. ChatGPT, a language
+            model trained by OpenAI based on the GPT4 and GPT-3.5 architecture,
+            was used to provide intelligent responses and assist in the
+            development of this application. Through the use of DevOps best
+            practices and tools such as Dependabot, CodeQL, and Vercel, this
+            project aims to showcase how LLMs can streamline the development
+            process, increase efficiency, and enhance security. We hope that
+            this project inspires others to explore the potential of LLMs in
+            software development and highlights the importance of incorporating
+            best practices in DevOps.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
