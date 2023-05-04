@@ -1,9 +1,11 @@
-export const calculateSMA = (prices, period) => {
-  if (prices.length < period) {
+export const calculateSMA = (values, period) => {
+  if (values.length < period) {
     return 0;
   }
 
-  const slicedPrices = prices.slice(-period);
+  const slicedPrices = values
+    .slice(-period)
+    .map((value) => parseFloat(value["4. close"]));
   const sum = slicedPrices.reduce((a, b) => a + b, 0);
   return sum / period;
 };

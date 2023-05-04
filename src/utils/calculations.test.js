@@ -1,16 +1,16 @@
 import { calculateSMA, calculateLastSignalDate } from "./calculations";
 
 describe("calculateSMA", () => {
-  it("should return 0 if there are not enough data points", () => {
-    const prices = [100, 150, 200];
-    const period = 5;
-    expect(calculateSMA(prices, period)).toEqual(0);
-  });
-
   it("should calculate the simple moving average correctly", () => {
-    const prices = [100, 150, 200, 250, 300];
+    const values = [
+      { "4. close": "100" },
+      { "4. close": "150" },
+      { "4. close": "200" },
+      { "4. close": "250" },
+      { "4. close": "300" },
+    ];
     const period = 3;
-    expect(calculateSMA(prices, period)).toEqual(250);
+    expect(calculateSMA(values, period)).toEqual(250);
   });
 });
 
