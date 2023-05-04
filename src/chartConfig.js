@@ -1,6 +1,7 @@
 import Chart from "chart.js/auto";
 import { registerables } from "chart.js";
 import moment from "moment";
+import "chartjs-adapter-moment";
 import { calculateLastSignalDate } from "./utils/calculations";
 
 Chart.register(...registerables);
@@ -55,6 +56,7 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
             type: "time",
             time: {
               parser: "YYYY-MM-DD",
+              adapter: moment,
               unit: "day",
             },
           },
