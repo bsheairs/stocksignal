@@ -40,6 +40,7 @@ const App = () => {
       );
 
       drawConfidenceChart(
+        chartRef,
         prices.slice(-30),
         dates.slice(-30),
         sma50.slice(-30),

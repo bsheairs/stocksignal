@@ -4,7 +4,7 @@ import "chartjs-plugin-annotation";
 import "chartjs-adapter-date-fns";
 import { calculateLastSignalDate } from "./utils/calculations";
 
-export const drawConfidenceChart = (prices, dates, sma50, sma200) => {
+export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
   if (chartRef.current) {
     const ctx = chartRef.current.getContext("2d");
 
