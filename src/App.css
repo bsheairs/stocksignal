@@ -28,6 +28,13 @@
   margin-bottom: 20px;
 }
 
+/* Add a media query for mobile screens */
+@media (max-width: 768px) {
+  .content {
+    min-height: 300px; /* Set a minimum height for the chart container on mobile */
+  }
+}
+
 .input-container {
   display: flex;
   flex-direction: column;

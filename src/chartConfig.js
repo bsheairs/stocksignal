@@ -85,6 +85,7 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
             },
             ticks: {
               skipNull: true,
+              autoSkip: true,
             },
           },
           y: {
