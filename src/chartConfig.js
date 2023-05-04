@@ -81,7 +81,7 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
       options: {
         scales: {
           x: {
-            type: "time",
+            type: "timeseries",
             time: {
               parser: "YYYY-MM-DD",
               adapter: moment,
