@@ -35,9 +35,13 @@ const App = () => {
       const prices = values.map((value) => parseFloat(value["4. close"]));
       const sma50 = calculateSMA(prices, 50);
       const sma200 = calculateSMA(prices, 200);
-      setSignal(
-        sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
-      );
+      if (sma200.filter((sma) => sma !== 0).length > 0) {
+        setSignal(
+          sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
+        );
+      } else {
+        setSignal("SMA200 is not populated with non-zero numbers");
+      }
 
       drawConfidenceChart(
         chartRef,
