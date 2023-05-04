@@ -1,10 +1,8 @@
-// src/chartConfig.js
-import { Chart, registerables } from "chart.js";
-import "chartjs-plugin-annotation";
-import dateAdapter from "chartjs-adapter-date-fns";
+import Chart from "chart.js/auto";
+import { registerables } from "chart.js";
+import { AdapterDateFns } from "chartjs-adapter-date-fns";
+import "chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.min.js";
 import { calculateLastSignalDate } from "./utils/calculations";
-
-Chart.register(...registerables, dateAdapter);
 
 export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
   if (chartRef.current) {

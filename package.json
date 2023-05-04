@@ -50,6 +50,9 @@
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/(?!axios)"
+    ],
+    "setupFilesAfterEnv": [
+      "./jest.setup.js"
     ]
   },
   "transform": {
