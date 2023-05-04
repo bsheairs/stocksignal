@@ -1,8 +1,4 @@
 export const calculateSMA = (prices, period) => {
-  if (prices.length < period) {
-    return new Array(prices.length).fill(null);
-  }
-
   const result = new Array(prices.length).fill(null);
   let sum = 0;
 
@@ -11,8 +7,9 @@ export const calculateSMA = (prices, period) => {
 
     if (i >= period) {
       sum -= prices[i - period];
-      result[i] = sum / period;
-    } else if (i === period - 1) {
+    }
+
+    if (i >= period - 1) {
       result[i] = sum / period;
     }
   }

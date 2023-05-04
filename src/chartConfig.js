@@ -38,13 +38,6 @@ export const drawConfidenceChart = (
     for (let i = 0; i < dates.length && i < periodMap[filterPeriod]; i++) {
       const date = moment(dates[i]);
 
-      //   const dayOfWeek = date.day();
-      //   const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
-
-      //   if (isWeekend) {
-      //     continue;
-      //   }
-
       //   const hasData =
       //     prices[i] !== null &&
       //     prices[i] !== "" &&
