@@ -13,7 +13,13 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
       window.myChart.destroy();
     }
 
-    const lastSignalDate = calculateLastSignalDate(sma50, sma200, dates);
+    let lastSignalDate;
+    try {
+      lastSignalDate = calculateLastSignalDate(sma50, sma200, dates);
+    } catch (error) {
+      console.error("Error calculating last signal date:", error);
+      return;
+    }
 
     window.myChart = new Chart(ctx, {
       type: "line",
