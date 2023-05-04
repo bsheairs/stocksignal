@@ -89,8 +89,9 @@ button:hover {
 
 .container p {
   margin: 0;
+  margin-bottom: 16px;
 }
 
-.p {
-  margin-bottom: 10px;
+.container p:last-child {
+  margin-bottom: 0;
 }

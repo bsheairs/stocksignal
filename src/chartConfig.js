@@ -82,6 +82,8 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
               parser: "YYYY-MM-DD",
               adapter: moment,
               unit: "day",
+            },
+            ticks: {
               skipNull: true,
             },
           },
