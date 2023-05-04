@@ -15,7 +15,7 @@ const App = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE_API_KEY}$outputsize=full`
+        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${ticker}&apikey=${process.env.REACT_APP_ALPHA_VANTAGE_API_KEY}&outputsize=full`
       );
 
       if (!response.data || !response.data["Time Series (Daily)"]) {
@@ -29,7 +29,8 @@ const App = () => {
 
       if (!values || values.length === 0) {
         console.error("No data values found:", data);
-        throw new Error("No data values found");
+        alert("No data values found");
+        return;
       }
 
       const prices = values.map((value) => parseFloat(value["4. close"]));
