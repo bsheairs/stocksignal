@@ -44,13 +44,7 @@ const App = () => {
         setSignal("SMA200 is not populated with non-zero numbers");
       }
 
-      drawConfidenceChart(
-        chartRef,
-        prices.slice(30),
-        dates.slice(30),
-        sma50.slice(30),
-        sma200.slice(30)
-      );
+      drawConfidenceChart(chartRef, prices, dates, sma50, sma200);
     } catch (error) {
       console.error("Error fetching data:", error);
       setSignal("Error fetching data");
