@@ -43,7 +43,7 @@ export const drawConfidenceChart = (
     for (let i = 0; i < dates.length; i++) {
       const date = moment(dates[i]);
 
-      if (date.isBefore(monthsAgo)) {
+      if (date.isAfter(monthsAgo)) {
         continue;
       }
 
