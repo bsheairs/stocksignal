@@ -31,7 +31,10 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
       }
 
       const hasData =
-        prices[i] !== null && sma50[i] !== null && sma200[i] !== null;
+        prices[i] !== null &&
+        prices[i] !== "" &&
+        sma50[i] !== null &&
+        sma200[i] !== null;
 
       if (!hasData) {
         continue;

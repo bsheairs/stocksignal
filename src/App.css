@@ -17,6 +17,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: #ffffff;
+  margin-bottom: 2rem;
 }
 
 .content {
@@ -25,6 +26,8 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  margin-top: 2rem;
+  margin-bottom: 20px;
 }
 
 .input-container {
