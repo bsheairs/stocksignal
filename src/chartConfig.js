@@ -45,21 +45,27 @@ export const drawConfidenceChart = (
       //     continue;
       //   }
 
-      const hasData =
-        prices[i] !== null &&
-        prices[i] !== "" &&
-        sma50[i] !== null &&
-        sma200[i] !== null;
+      //   const hasData =
+      //     prices[i] !== null &&
+      //     prices[i] !== "" &&
+      //     sma50[i] !== null &&
+      //     sma200[i] !== null;
 
-      if (!hasData) {
-        continue;
-      }
+      //   if (!hasData) {
+      //     continue;
+      //   }
 
       filteredDates.push(date.format("YYYY-MM-DD"));
       filteredPrices.push(prices[i]);
       filteredSma50.push(sma50[i]);
       filteredSma200.push(sma200[i]);
     }
+
+    // Reverse the filtered data arrays
+    filteredDates.reverse();
+    filteredPrices.reverse();
+    filteredSma50.reverse();
+    filteredSma200.reverse();
 
     // Log the filteredDates and filteredPrices to the console
     console.log("Filtered Dates:", filteredDates);
@@ -102,10 +108,10 @@ export const drawConfidenceChart = (
               adapter: moment,
               unit: "day",
             },
-            ticks: {
-              //   skipNull: true,
-              autoSkip: true,
-            },
+            // ticks: {
+            //   //   skipNull: true,
+            //   autoSkip: true,
+            // },
           },
           y: {
             beginAtZero: false,
