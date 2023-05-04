@@ -8,9 +8,6 @@ import { createCanvas } from "canvas";
 // src/setupTests.js
 import "jest-canvas-mock";
 import { Chart } from "chart.js";
-import dateAdapter from "chartjs-adapter-date-fns";
-
-Chart.register(dateAdapter);
 
 // Mock the HTMLCanvasElement.getContext method
 HTMLCanvasElement.prototype.getContext = function () {

@@ -1,8 +1,9 @@
 import Chart from "chart.js/auto";
 import { registerables } from "chart.js";
-import { AdapterDateFns } from "chartjs-adapter-date-fns";
-import "chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.min.js";
+import moment from "moment";
 import { calculateLastSignalDate } from "./utils/calculations";
+
+Chart.register(...registerables);
 
 export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
   if (chartRef.current) {
@@ -17,7 +18,7 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
     window.myChart = new Chart(ctx, {
       type: "line",
       data: {
-        labels: dates,
+        labels: dates.map((date) => moment(date).format("YYYY-MM-DD")),
         datasets: [
           {
             label: "Stock Price",
@@ -47,6 +48,7 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
           x: {
             type: "time",
             time: {
+              parser: "YYYY-MM-DD",
               unit: "day",
             },
           },
