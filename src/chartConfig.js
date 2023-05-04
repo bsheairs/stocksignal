@@ -29,23 +29,14 @@ export const drawConfidenceChart = (
     const filteredSma200 = [];
 
     const periodMap = {
-      "1m": 1,
-      "3m": 3,
-      "6m": 6,
-      "1y": 12,
+      "1m": 20,
+      "3m": 60,
+      "6m": 120,
+      "1y": 240,
     };
 
-    const currentDate = moment();
-    const monthsAgo = currentDate
-      .clone()
-      .subtract(periodMap[filterPeriod], "months");
-
-    for (let i = 0; i < dates.length; i++) {
+    for (let i = 0; i < dates.length || i < periodMap[filterPeriod]; i++) {
       const date = moment(dates[i]);
-
-      if (date.isBefore(monthsAgo)) {
-        continue;
-      }
 
       const dayOfWeek = date.day();
       const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
