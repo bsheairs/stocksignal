@@ -1,17 +1,23 @@
 export const calculateSMA = (prices, period) => {
   if (prices.length < period) {
-    return Array(prices.length).fill(0);
+    return new Array(prices.length).fill(null);
   }
 
-  let sma = [];
-  for (let i = period - 1; i < prices.length; i++) {
-    const slicedPrices = prices.slice(i - period + 1, i + 1);
-    const sum = slicedPrices.reduce((a, b) => a + b, 0);
-    sma.push(sum / period);
+  const result = new Array(prices.length).fill(null);
+  let sum = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    sum += prices[i];
+
+    if (i >= period) {
+      sum -= prices[i - period];
+      result[i] = sum / period;
+    } else if (i === period - 1) {
+      result[i] = sum / period;
+    }
   }
-  return Array(period - 1)
-    .fill(0)
-    .concat(sma);
+
+  return result;
 };
 
 export const calculateLastSignalDate = (sma50, sma200, dates) => {
