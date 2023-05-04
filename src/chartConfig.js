@@ -46,6 +46,9 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
       filteredSma200.push(sma200[i]);
     }
 
+    console.log(filteredDates);
+    console.log(filteredPrices);
+
     window.myChart = new Chart(ctx, {
       type: "line",
       data: {
