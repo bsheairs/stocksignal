@@ -2,11 +2,14 @@ export const calculateSMA = (prices, period) => {
   const result = new Array(prices.length).fill(null);
   let sum = 0;
 
-  for (let i = 0; i < prices.length; i++) {
-    sum += prices[i];
+  // Reverse the input price data
+  const reversedPrices = [...prices].reverse();
+
+  for (let i = 0; i < reversedPrices.length; i++) {
+    sum += reversedPrices[i];
 
     if (i >= period) {
-      sum -= prices[i - period];
+      sum -= reversedPrices[i - period];
     }
 
     if (i >= period - 1) {
@@ -14,7 +17,8 @@ export const calculateSMA = (prices, period) => {
     }
   }
 
-  return result;
+  // Reverse the result back to the original order
+  return result.reverse();
 };
 
 export const calculateLastSignalDate = (sma50, sma200, dates) => {
