@@ -4,10 +4,11 @@ describe("calculateSMA", () => {
   it("should calculate the simple moving average correctly", () => {
     const prices = [100, 200, 300, 400, 500];
     const period = 3;
-    const expectedSMA = [null, 150, 200, 250, 300];
+    const expectedSMA = [null, null, 200, 300, 400];
     expect(calculateSMA(prices, period)).toEqual(expectedSMA);
   });
 });
+
 
 
 describe("calculateLastSignalDate", () => {
