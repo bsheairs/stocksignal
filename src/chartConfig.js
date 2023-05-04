@@ -6,7 +6,14 @@ import "chartjs-adapter-moment";
 
 Chart.register(...registerables);
 
-export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
+export const drawConfidenceChart = (
+  chartRef,
+  prices,
+  dates,
+  sma50,
+  sma200,
+  filterPeriod = "1y" // Default value set to 1 year
+) => {
   if (chartRef.current) {
     const ctx = chartRef.current.getContext("2d");
 
@@ -21,8 +28,25 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
     const filteredSma50 = [];
     const filteredSma200 = [];
 
+    const periodMap = {
+      "1m": 1,
+      "3m": 3,
+      "6m": 6,
+      "1y": 12,
+    };
+
+    const currentDate = moment();
+    const monthsAgo = currentDate
+      .clone()
+      .subtract(periodMap[filterPeriod], "months");
+
     for (let i = 0; i < dates.length; i++) {
       const date = moment(dates[i]);
+
+      if (date.isBefore(monthsAgo)) {
+        continue;
+      }
+
       const dayOfWeek = date.day();
       const isWeekend = dayOfWeek === 6 || dayOfWeek === 0;
 
@@ -45,10 +69,6 @@ export const drawConfidenceChart = (chartRef, prices, dates, sma50, sma200) => {
       filteredSma50.push(sma50[i]);
       filteredSma200.push(sma200[i]);
     }
-
-    // Log the filteredDates and filteredPrices to the console
-    console.log("Filtered Dates:", filteredDates);
-    console.log("Filtered Prices:", filteredPrices);
 
     window.myChart = new Chart(ctx, {
       type: "line",
