@@ -115,7 +115,13 @@ const App = () => {
             process, increase efficiency, and enhance security. We hope that
             this project inspires others to explore the potential of LLMs in
             software development and highlights the importance of incorporating
-            best practices in DevOps.
+            best practices in DevOps.{" "}
+          </p>
+          <p>
+            <a href="https://github.com/bsheairs/stocksignal">
+              Visit the GitHub repo
+            </a>{" "}
+            to learn more
           </p>
         </div>
       </footer>
