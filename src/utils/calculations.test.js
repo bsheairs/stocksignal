@@ -2,15 +2,10 @@ import { calculateSMA, calculateLastSignalDate } from "./calculations";
 
 describe("calculateSMA", () => {
   it("should calculate the simple moving average correctly", () => {
-    const values = [
-      { "4. close": "100" },
-      { "4. close": "150" },
-      { "4. close": "200" },
-      { "4. close": "250" },
-      { "4. close": "300" },
-    ];
+    const prices = [100, 150, 200, 250, 300];
     const period = 3;
-    expect(calculateSMA(values, period)).toEqual(250);
+    const expectedSMA = [0, 0, 150, 200, 250];
+    expect(calculateSMA(prices, period)).toEqual(expectedSMA);
   });
 });
 
