@@ -46,10 +46,10 @@ const App = () => {
 
       drawConfidenceChart(
         chartRef,
-        prices.slice(-30),
-        dates.slice(-30),
-        sma50.slice(-30),
-        sma200.slice(-30)
+        prices.slice(30),
+        dates.slice(30),
+        sma50.slice(30),
+        sma200.slice(30)
       );
     } catch (error) {
       console.error("Error fetching data:", error);
