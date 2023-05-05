@@ -43,13 +43,11 @@ const App = () => {
       const prices = values.map((value) => parseFloat(value["4. close"]));
       const sma50 = calculateSMA(prices, 50);
       const sma200 = calculateSMA(prices, 200);
-      if (sma200.filter((sma) => sma !== null).length > 0) {
-        setSignal(
-          sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
-        );
-      } else {
-        setSignal("SMA200 is not populated with non-null numbers");
-      }
+      setSignal(
+        sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
+      );
+      console.log("sma50", sma50[sma50.length - 1]);
+      console.log("sma200", sma200[sma200.length - 1]);
 
       drawConfidenceChart(chartRef, prices, dates, sma50, sma200);
     } catch (error) {
