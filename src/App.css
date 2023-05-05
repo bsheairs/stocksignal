@@ -25,6 +25,8 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
+  max-width: 90%; /* Add a max-width to limit the width */
+  margin: 0 auto; /* Center the content */
   margin-bottom: 20px;
 }
 
@@ -32,6 +34,9 @@
 @media (max-width: 768px) {
   .content {
     min-height: 300px; /* Set a minimum height for the chart container on mobile */
+  }
+  .chart-container {
+    padding-bottom: 75%; /* Adjust the aspect ratio for smaller screens */
   }
 }
 
@@ -115,5 +120,5 @@ canvas {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 90%;
 }
