@@ -60,10 +60,6 @@ export const drawConfidenceChart = (
     filteredSma50.reverse();
     filteredSma200.reverse();
 
-    // Log the filteredDates and filteredPrices to the console
-    console.log("Filtered Dates:", filteredDates);
-    console.log("Filtered Prices:", filteredPrices);
-
     window.myChart = new Chart(ctx, {
       type: "line",
       data: {

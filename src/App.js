@@ -33,15 +33,22 @@ const App = () => {
         return;
       }
 
+      const requiredDataPoints = 440;
+      if (values.length < requiredDataPoints) {
+        console.error("Not enough data points:", data);
+        alert("Not enough data points");
+        return;
+      }
+
       const prices = values.map((value) => parseFloat(value["4. close"]));
       const sma50 = calculateSMA(prices, 50);
       const sma200 = calculateSMA(prices, 200);
-      if (sma200.filter((sma) => sma !== 0).length > 0) {
+      if (sma200.filter((sma) => sma !== null).length > 0) {
         setSignal(
           sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
         );
       } else {
-        setSignal("SMA200 is not populated with non-zero numbers");
+        setSignal("SMA200 is not populated with non-null numbers");
       }
 
       drawConfidenceChart(chartRef, prices, dates, sma50, sma200);

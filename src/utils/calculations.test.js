@@ -1,14 +1,30 @@
 import { calculateSMA, calculateLastSignalDate } from "./calculations";
 
-describe('calculateSMA', () => {
-  test('should calculate the simple moving average correctly', () => {
-    const prices = [500, 400, 300, 200, 100].reverse();
+describe("calculateSMA", () => {
+  test("should calculate the simple moving average correctly", () => {
+    const prices = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
     const period = 3;
-    const expectedSMA = [400, 300, 200, null, null].reverse();
+    const expectedSMA = [20, 30, 40, 50, 60, 70, 80, 90, null, null];
+
     expect(calculateSMA(prices, period)).toEqual(expectedSMA);
   });
-});
 
+  test("should return an array of null values if the period is larger than the number of prices", () => {
+    const prices = [10, 20, 30, 40, 50];
+    const period = 6;
+    const expectedSMA = [null, null, null, null, null];
+
+    expect(calculateSMA(prices, period)).toEqual(expectedSMA);
+  });
+
+  test("should return an array of the same length as the input prices", () => {
+    const prices = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    const period = 5;
+
+    const sma = calculateSMA(prices, period);
+    expect(sma.length).toBe(prices.length);
+  });
+});
 
 describe("calculateLastSignalDate", () => {
   it("should return null if no signal change is detected", () => {
