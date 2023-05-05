@@ -41,8 +41,11 @@ const App = () => {
       }
 
       const prices = values.map((value) => parseFloat(value["4. close"]));
+      console.log("prices", prices);
       const sma50 = calculateSMA(prices, 50);
+      console.log("sma50", sma50);
       const sma200 = calculateSMA(prices, 200);
+      console.log("sma200", sma200);
       setSignal(
         sma50[sma50.length - 1] > sma200[sma200.length - 1] ? "BUY" : "SELL"
       );
