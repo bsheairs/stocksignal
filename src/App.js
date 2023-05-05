@@ -78,6 +78,8 @@ const App = () => {
             id="confidence-chart"
             ref={chartRef}
             data-testid="confidence-chart"
+            width={400}
+            height={100}
           />
         </div>
 
