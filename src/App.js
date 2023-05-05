@@ -94,7 +94,18 @@ const App = () => {
           <div>Loading...</div>
         ) : (
           <div>
-            The trading signal for <strong>{ticker}</strong> is: {signal}
+            The trading signal for <strong>{ticker}</strong> is:{" "}
+            {signal ? (
+              <span
+                className={`signal-${
+                  signal.toLowerCase() === "buy" ? "buy" : "sell"
+                }`}
+              >
+                {signal}
+              </span>
+            ) : (
+              ""
+            )}
           </div>
         )}
       </div>

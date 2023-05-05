@@ -122,3 +122,13 @@ canvas {
   left: 0;
   width: 90%;
 }
+
+.signal-buy {
+  font-size: 1.2rem;
+  color: #28a745; /* Green color */
+}
+
+.signal-sell {
+  font-size: 1.2rem;
+  color: #dc3545; /* Red color */
+}
