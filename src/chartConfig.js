@@ -38,16 +38,6 @@ export const drawConfidenceChart = (
     for (let i = 0; i < dates.length && i < periodMap[filterPeriod]; i++) {
       const date = moment(dates[i]);
 
-      //   const hasData =
-      //     prices[i] !== null &&
-      //     prices[i] !== "" &&
-      //     sma50[i] !== null &&
-      //     sma200[i] !== null;
-
-      //   if (!hasData) {
-      //     continue;
-      //   }
-
       filteredDates.push(date.format("YYYY-MM-DD"));
       filteredPrices.push(prices[i]);
       filteredSma50.push(sma50[i]);
@@ -119,6 +109,8 @@ export const drawConfidenceChart = (
             },
           },
         },
+        responsive: true,
+        maintainAspectRatio: false,
       },
     });
   }

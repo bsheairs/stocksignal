@@ -75,13 +75,13 @@ const App = () => {
         <h1>AI Stock Signal</h1>
       </header>
       <div className="content">
-        <canvas
-          id="confidence-chart"
-          ref={chartRef}
-          data-testid="confidence-chart"
-          width={400}
-          height={100}
-        />
+        <div className="chart-container">
+          <canvas
+            id="confidence-chart"
+            ref={chartRef}
+            data-testid="confidence-chart"
+          />
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div className="input-container">
