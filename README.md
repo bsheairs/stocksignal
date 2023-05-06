@@ -2,6 +2,8 @@
 
 AI Stock Signal is a single-page web application that displays buy or sell signals for stocks based on their historical price data. The project is developed with the help of GPT-4, an advanced language model by OpenAI.
 
+Live Demo: http://stocksignal.vercel.app
+
 ![AI Stock Signal Screenshot](./screenshot.png)
 
 ## Features

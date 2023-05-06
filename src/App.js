@@ -42,7 +42,7 @@ const App = () => {
 
       const prices = values.map((value) => parseFloat(value["4. close"]));
       const sma50 = calculateEMA(prices, 50);
-      const sma200 = calculatEMA(prices, 200);
+      const sma200 = calculateEMA(prices, 200);
       setSignal(sma50[0] > sma200[0] ? "BUY" : "SELL");
 
       drawConfidenceChart(chartRef, prices, dates, sma50, sma200);
