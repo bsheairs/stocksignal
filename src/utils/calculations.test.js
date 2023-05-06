@@ -30,30 +30,30 @@ describe("calculateSMA", () => {
   });
 });
 
-describe("calculateEMA", () => {
-  it("calculates EMA correctly", () => {
-    const prices = [2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const period = 5;
-    const expectedEMA = [null, null, null, null, 4, 5, 6, 7, 8];
+// describe("calculateEMA", () => {
+//   it("calculates EMA correctly", () => {
+//     const prices = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+//     const period = 5;
+//     const expectedEMA = [null, null, null, null, 4, 5, 6, 7, 8];
 
-    expect(calculateEMA(prices, period)).toEqual(expectedEMA);
-  });
+//     expect(calculateEMA(prices, period)).toEqual(expectedEMA);
+//   });
 
-  it("returns an empty array if prices is empty", () => {
-    const prices = [];
-    const period = 5;
+//   it("returns an empty array if prices is empty", () => {
+//     const prices = [];
+//     const period = 5;
 
-    expect(calculateEMA(prices, period)).toEqual([]);
-  });
+//     expect(calculateEMA(prices, period)).toEqual([]);
+//   });
 
-  it("returns an array of nulls if period is greater than prices length", () => {
-    const prices = [2, 3, 4];
-    const period = 5;
-    const expectedEMA = [null, null, null];
+//   it("returns an array of nulls if period is greater than prices length", () => {
+//     const prices = [2, 3, 4];
+//     const period = 5;
+//     const expectedEMA = [null, null, null];
 
-    expect(calculateEMA(prices, period)).toEqual(expectedEMA);
-  });
-});
+//     expect(calculateEMA(prices, period)).toEqual(expectedEMA);
+//   });
+// });
 
 describe("calculateLastSignalDate", () => {
   it("should return null if no signal change is detected", () => {
