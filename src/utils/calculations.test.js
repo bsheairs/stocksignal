@@ -1,4 +1,8 @@
-import { calculateSMA, calculateLastSignalDate } from "./calculations";
+import {
+  calculateSMA,
+  calculateEMA,
+  calculateLastSignalDate,
+} from "./calculations";
 
 describe("calculateSMA", () => {
   test("should calculate the simple moving average correctly", () => {
@@ -23,6 +27,31 @@ describe("calculateSMA", () => {
 
     const sma = calculateSMA(prices, period);
     expect(sma.length).toBe(prices.length);
+  });
+});
+
+describe("calculateEMA", () => {
+  it("calculates EMA correctly", () => {
+    const prices = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const period = 5;
+    const expectedEMA = [null, null, null, null, 4, 5, 6, 7, 8];
+
+    expect(calculateEMA(prices, period)).toEqual(expectedEMA);
+  });
+
+  it("returns an empty array if prices is empty", () => {
+    const prices = [];
+    const period = 5;
+
+    expect(calculateEMA(prices, period)).toEqual([]);
+  });
+
+  it("returns an array of nulls if period is greater than prices length", () => {
+    const prices = [2, 3, 4];
+    const period = 5;
+    const expectedEMA = [null, null, null];
+
+    expect(calculateEMA(prices, period)).toEqual(expectedEMA);
   });
 });
 

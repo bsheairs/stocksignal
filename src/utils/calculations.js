@@ -14,6 +14,31 @@ export const calculateSMA = (prices, period) => {
   return result;
 };
 
+export const calculateEMA = (prices, period) => {
+  if (prices.length < period) {
+    return new Array(prices.length).fill(null);
+  }
+
+  const result = new Array(prices.length).fill(null);
+
+  const multiplier = 2 / (period + 1);
+  let sum = 0;
+
+  for (let i = 0; i < period; i++) {
+    sum += prices[i];
+  }
+
+  const initialEMA = sum / period;
+
+  result[period - 1] = initialEMA;
+
+  for (let i = period; i < prices.length; i++) {
+    result[i] = (prices[i] - result[i - 1]) * multiplier + result[i - 1];
+  }
+
+  return result;
+};
+
 export const calculateLastSignalDate = (sma50, sma200, dates) => {
   for (let i = dates.length - 1; i > 0; i--) {
     if (
