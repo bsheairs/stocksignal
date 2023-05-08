@@ -112,6 +112,16 @@ const App = () => {
       <footer className="footer">
         <div className="container">
           <p>
+            AI Stock Signal uses the Simple Moving Average (SMA) to determine
+            the trend of an asset's price over a given time period. The signal
+            is calculated by taking the arithmetic mean of a set of prices over
+            a certain time period and analyzing if the 50-day SMA is greater
+            than the 200-day SMA. However, it is important to note that SMA has
+            limitations and may not be an accurate predictor of future prices.
+            It is just one of many indicators that traders use to make informed
+            decisions.
+          </p>
+          <p>
             This project is an example of the power of large language models
             (LLMs) and how they can be used to develop code and automate the
             deployment and security of web applications. ChatGPT, a language
